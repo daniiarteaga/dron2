@@ -13,7 +13,8 @@ import Tkinter as tk
 
 #-- Connect to the vehicle
 print('Connecting...')
-vehicle = connect('udp:127.0.0.1:14551')
+vehicle = connect('/dev/ttyAMA0', baud=57600, wait_ready=True)
+print(str(vehicle.system_status.state))
 
 #-- Setup the commanded flying speed
 gnd_speed = 5 # [m/s]
@@ -26,7 +27,7 @@ def arm_and_takeoff(altitude):
       time.sleep(1)
 
    print("Arming motors")
-   vehicle.mode = VehicleMode("GUIDED")
+   vehicle.mode = VehicleMode("GUIDED_NOGPS")
    vehicle.armed = True
 
    while not vehicle.armed: time.sleep(1)
